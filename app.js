@@ -19,7 +19,7 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-mongoose.connect(database);
+mongoose.connect(database,{ useCreateIndex: true,useNewUrlParser: true,useUnifiedTopology: true});
 require('./config/passport.js')(passport);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -31,17 +31,17 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'ui/dist/')));
 
 app.use('/', routes);
 app.use('/users', users);
 app.get('/checkLogin',function(req,res,next){
   passport.authenticate('jwt',{session:false},function(err,user,info){
-    console.log("Tryring to protect this route ");
+    console.log("Protected route ");
     if(err) { return next(err); }
-    if(!user) { res.json({success:false}); }
+    if(!user) { res.status(401).json({success:false}); }
     else
-    res.json({success:true,userIs:user});
+    res.status(200).json({success:true,userIs:user});
   })(req,res,next);
 });
 app.use('/auth', auth);

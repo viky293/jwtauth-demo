@@ -10,13 +10,13 @@ module.exports = {
     );
     newUser.save(function(err,user){
       if(err){
-        res.json(500,{
+        res.status(500).json({
           message:"Something went wrong!!",
           error:err
-        });
+        })
       }
       else{
-        res.json({
+        res.status(200).json({
           message:"New user created.",
           _id:user._id
         });
@@ -25,7 +25,7 @@ module.exports = {
   },
   showAll:function(req,res){
     user.find(function(err,users){
-      res.json(users);
+      res.status(200).json(users);
     });
   }
 };

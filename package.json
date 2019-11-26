@@ -3,19 +3,20 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "postinstall": "cd ui && yarn",
+    "start": "(cd ui && parcel index.html) & nodemon ./bin/www"
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
-    "debug": "^2.6.9",
+    "debug": "^4.1.1",
     "express": "^4.16.3",
     "jade": "^1.11.0",
-    "jsonwebtoken": "^5.7.0",
-    "mongoose": "^4.13.17",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.7.12",
     "morgan": "^1.9.1",
-    "passport": "^0.3.2",
+    "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "serve-favicon": "^2.5.0"
   }

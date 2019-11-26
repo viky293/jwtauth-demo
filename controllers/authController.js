@@ -9,21 +9,21 @@ module.exports = {
     },function(err,user){
       if(err)
       {
-        res.json(500,{
+        res.status(500).json({
           message:'Something went wrong, could not find user',
           error: err
         });
 
       }
       else{
-        // res.json(user);
+        // res.status(200).json(user);
         var pwdCheck=user.checkPassword(req.body.password);
         if(pwdCheck){
-          var token =  jsonwebtoken.sign(user,secret,{expiresIn:10000});
-          res.json({'token':token});
+          var token =  jsonwebtoken.sign(user.toJSON(),secret,{expiresIn:10000});
+          res.status(200).json({'token':token});
         }
         else{
-          res.json({success:false});
+          res.status(401).json({success:false});
         }
       }
     });
